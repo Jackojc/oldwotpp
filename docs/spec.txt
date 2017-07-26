@@ -1,0 +1,34 @@
+<X>{}   :    Function with name of 'X'.
+<I>()   :    If index 'I' is zero, execute.
+<I>[]   :    Loop while value at index 'I' is > 0.
+
+<I>!    :    Boolean NOT the cell at index 'I'
+
+<I>r    :    Set pointer to register 'I'.
+
+<N>^    :    Move up 'N' cells.
+<N>v    :    Move down 'N' cells.
+
+<I>+    :    Add 'N' to the current cell.
+<I>-    :    Subtract 'N' from current cell.
+<I>*    :    Multiply the current cell by 'N'.
+<I>/    :    Divide the current cell by 'N'.
+<I>%    :    Divide the current cell by 'N' and store the remainder.
+
+<I>:    :    Output raw value at 'I'.
+<I>.    :    Output ASCII equivalent value at 'I'.
+<I>,    :    Input a single char as ASCII value to 'I'.
+
+<I>?    :    Get value in current register and copy it to index 'I'.
+<I>&    :    Set value in current register to value at index 'I'.
+
+<X>#    :    Execute function 'X'.
+
+<I>$    :    Go to cell at index 'I'.
+<N>`    :    Move the instruction pointer 'N' places. (e.g. -2, 5)
+
+<I>$    :    Push register 'I' to stack.
+<I>£    :    Pop from stack to register 'I'.
+<I>€    :    Peek at stack index 'I'.
+
+<N>=    :    Set current cell to 'N'.
