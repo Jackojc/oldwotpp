@@ -19,6 +19,10 @@ namespace wpp {
             ~stack() {}
 
 
+            inline std::array<T, X>* get_ref() noexcept {
+                return &items_;
+            }
+
             inline void push(const T &value) noexcept {
                 items_[index_++] = value;
             }
@@ -27,7 +31,11 @@ namespace wpp {
                 return items_[--index_];
             }
 
-            inline T peek(const unsigned int &index_) const noexcept {
+            inline T peek(const unsigned int &index) const noexcept {
+                return items_[index];
+            }
+
+            inline T peek_top() const noexcept {
                 return items_[index_];
             }
 
@@ -36,7 +44,7 @@ namespace wpp {
             }
 
             inline size_t size() const noexcept {
-                return X;
+                return index_;
             }
 
     };

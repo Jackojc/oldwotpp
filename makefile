@@ -13,8 +13,8 @@ all:
 
 
 debug:
-	$(CC) $(CFLAGS) -S $(MAIN) -Wall -g -o $(BINDIR)/$(OUT).s
-	$(CC) $(CFLAGS) $(MAIN) -Wall -g -o $(BINDIR)/$(OUT)
+	$(CC) $(CFLAGS) -S $(MAIN) -o $(BINDIR)/$(OUT).s
+	$(CC) $(CFLAGS) $(MAIN) -Wall -Wextra -g -o $(BINDIR)/$(OUT)
 
 
 opt:
