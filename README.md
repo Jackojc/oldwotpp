@@ -8,76 +8,76 @@
 
 ```
 
-\{}\<X\>   \:    Function with name of 'X'.
+{}<X>   :    Function with name of 'X'.
 
-\()\<I\>   \:    If index 'I' is re:zero, execute.
+()<I>   :    If index 'I' is re:zero, execute.
 
-\[]\<I\>   \:    Loop while value at index 'I' is > 0.
+[]<I>   :    Loop while value at index 'I' is > 0.
 
-<br>
 
-a-h     \:    Set registers
 
-<br>
+a-h     :    Set registers
 
-\! \<I\>   \:    Boolean NOT the cell at index 'I'
 
-r \<I\>   \:    Set pointer to register 'I'.
 
-\$ \<I\>   \:    Go to cell at index 'I'.
+! <I>   :    Boolean NOT the cell at index 'I'
 
-\` \<N\>   \:    Move the instruction pointer 'N' places. (e.g. -2, 5) (P.S. Keep in mind, arguments dont count as instructions, its JUST opcodes themselves so make sure to skip appropriately.)
+r <I>   :    Set pointer to register 'I'.
 
-<br>
+$ <I>   :    Go to cell at index 'I'.
 
-\^ \<N\>   \:    Move up 'N' cells.
+` <N>   :    Move the instruction pointer 'N' places. (e.g. -2, 5) (P.S. Keep in mind, arguments dont count as instructions, its JUST opcodes themselves so make sure to skip appropriately.)
 
-v \<N\>   \:    Move down 'N' cells.
 
-<br>
 
-\: \<I\>   \:    Output raw value at 'I'.
+^ <N>   :    Move up 'N' cells.
 
-\. \<I\>   \:    Output ASCII equivalent value at 'I'.
+v <N>   :    Move down 'N' cells.
 
-\, \<I\>   \:    Input a single char as ASCII value to 'I'.
 
-\@ \<X\>   \:    Include file 'X'.
 
-<br>
+: <I>   :    Output raw value at 'I'.
 
-\# \<X\>   \:    Execute function 'X'.
+. <I>   :    Output ASCII equivalent value at 'I'.
 
-<br>
+, <I>   :    Input a single char as ASCII value to 'I'.
 
-\? \<I\>   \:    Get value in current register and copy it to index 'I'.
+@ <X>   :    Include file 'X'.
 
-\& \<I\>   \:    Set value in current register to value at index 'I'.
 
-<br>
 
-\~ \<I\>   \:    Push register 'I' to stack.
+# <X>   :    Execute function 'X'.
 
-\| \<I\>   \:    Pop from stack to register 'I'.
 
-\\ \<I\>   \:    Peek at top of stack and push to register 'I'.
 
-<br>
+? <I>   :    Get value in current register and copy it to index 'I'.
 
-\= \<N\>   \:    Set current cell to 'N'.
+& <I>   :    Set value in current register to value at index 'I'.
 
-\_ \<N\>   \:    Set current register to 'N'.
 
-<br>
 
-\+ \<I\>   \:    Add 'N' to the current cell.
+~ <I>   :    Push register 'I' to stack.
 
-\- \<I\>   \:    Subtract 'N' from current cell.
+| <I>   :    Pop from stack to register 'I'.
 
-\* \<I\>   \:    Multiply the current cell by 'N'.
+\ <I>   :    Peek at top of stack and push to register 'I'.
 
-\/ \<I\>   \:    Divide the current cell by 'N'.
 
-\% \<I\>   \:    Divide the current cell by 'N' and store the remainder.
+
+= <N>   :    Set current cell to 'N'.
+
+_ <N>   :    Set current register to 'N'.
+
+
+
++ <I>   :    Add 'N' to the current cell.
+
+- <I>   :    Subtract 'N' from current cell.
+
+* <I>   :    Multiply the current cell by 'N'.
+
+/ <I>   :    Divide the current cell by 'N'.
+
+% <I>   :    Divide the current cell by 'N' and store the remainder.
 
 ```
