@@ -7,13 +7,29 @@
 #include <unordered_set>
 #include <fstream>
 
+
 #include "src/globals.h"
 #include "src/debugging.cpp"
 #include "src/stack.cpp"
 #include "src/lexer.cpp"
 #include "src/functions.cpp"
 #include "src/parser.cpp"
+#include "src/preprocessor.cpp"
 
+
+
+// TODO:
+/*
+    Loops
+    If statements
+    Local include preprocessor directive
+    Polish code
+    Optimise code
+    Add a-h register setters
+    Fix directory structure...
+    Nested function declarations...
+
+*/
 
 
 
@@ -21,8 +37,8 @@ int main(int argc, char const *argv[]) {
 
     // INITIALISE
     wpp::initialise();
-    std::string code = wpp::clean_string(wpp::read_file("tests/test.wpp"));
-    wpp::lexer(code);
+    wpp::preprocessor(wpp::read_file("tests/test.wpp"));
+    wpp::lexer(wpp::clean_string(wpp::CODE));
     wpp::parser(wpp::TOKENS);
 
     // DARRTY DEEDS
@@ -60,6 +76,9 @@ int main(int argc, char const *argv[]) {
 
     std::cout << "\n------- FUNK -------\n";
     wpp::print_functions();
+
+    std::cout << "\n------- CODE -------\n";
+    std::cout << wpp::clean_string(wpp::CODE) << std::endl;
 
     return 0;
 }

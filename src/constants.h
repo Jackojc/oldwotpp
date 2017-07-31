@@ -5,7 +5,7 @@
 namespace wpp {
 
     using DATATYPE = double;
-    typedef void (*TokenCallback)(std::string);
+    using TokenCallback = void(*)(const std::string&);
 
     constexpr unsigned int STACK_SIZE = 500;
     constexpr unsigned int DATA_SIZE  = 65536;

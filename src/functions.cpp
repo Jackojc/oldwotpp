@@ -9,6 +9,7 @@
 #include "globals.h"
 #include "getch.h"
 #include "parser.h"
+#include "lexer.cpp"
 
 
 namespace wpp {
@@ -26,21 +27,46 @@ namespace wpp {
 
 
     // BUILT INS
-    inline void do_nothing(std::string arg) noexcept {
+    inline unsigned int count_char(const std::string& code, const std::string& tokens) noexcept {
+        unsigned int num_char = 0;
+
+        for (auto& chr: code) {
+            for (auto& tok: tokens) {
+                if (chr == tok) {
+                    num_char++;
+                }
+            }
+        }
+
+        return num_char;
+    }
+
+
+    inline void do_nothing(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         return;
     }
 
-    inline void do_something(std::string arg) noexcept {
+    inline void do_something(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
-        std::cout << "I did something: " << arg << '\n';
         return;
     }
 
     inline void initialise() noexcept {
+
+        for (auto& item: wpp::PRE_CALLBACKS) {
+            wpp::ALL_WHITELIST.insert(item.first);
+            wpp::PRE_WHITELIST.insert(item.first);
+            wpp::PRE_WHITELIST_STR += item.first;
+
+        }
+
         for (auto& item: wpp::CALLBACKS) {
             wpp::WHITELIST.insert(item.first);
+            wpp::ALL_WHITELIST.insert(item.first);
         }
+
+
     }
 
 
@@ -77,7 +103,7 @@ namespace wpp {
 
 
     // FUNCTIONS
-    inline void exec(std::string arg) noexcept {
+    inline void exec(const std::string& arg) noexcept {
         unsigned int old_instr_ptr = wpp::INSTR_POINTER;
         wpp::INSTR_POINTER = 0;
 
@@ -87,7 +113,7 @@ namespace wpp {
     }
 
 
-    inline void open_function(std::string arg) noexcept {
+    inline void open_function(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
 
         while (true) {
@@ -112,9 +138,9 @@ namespace wpp {
     }
 
 
-    inline void close_function(std::string arg) noexcept {
+    inline void close_function(const std::string& arg) noexcept {
         wpp::GLOB_FUNC.name = arg;
-        wpp::FUNC_DECLARATIONS.insert( { arg, wpp::GLOB_FUNC } );
+        wpp::FUNC_DECLARATIONS[arg] = wpp::GLOB_FUNC;
         wpp::GLOB_FUNC = { "", { } };
         wpp::INSTR_POINTER++;
     }
@@ -128,7 +154,7 @@ namespace wpp {
 
 
     // BOOLEAN / BRANCHING
-    inline void not_sofast(std::string arg) noexcept {
+    inline void not_sofast(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             wpp::set_data_cell(!wpp::get_data_cell());
@@ -138,12 +164,12 @@ namespace wpp {
     }
 
 
-    inline void open_if(std::string arg) noexcept {
+    inline void open_if(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
     }
 
 
-    inline void close_if(std::string arg) noexcept {
+    inline void close_if(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
     }
 
@@ -155,12 +181,12 @@ namespace wpp {
 
 
     // LOOPING
-    inline void open_loop(std::string arg) noexcept {
+    inline void open_loop(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
     }
 
 
-    inline void close_loop(std::string arg) noexcept {
+    inline void close_loop(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
     }
 
@@ -173,7 +199,7 @@ namespace wpp {
 
 
     // POINTER OPS
-    inline void set_reg_ptr(std::string arg) noexcept {
+    inline void set_reg_ptr(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             wpp::REG_POINTER = 0;
@@ -183,7 +209,7 @@ namespace wpp {
     }
 
 
-    inline void set_data_pointer(std::string arg) noexcept {
+    inline void set_data_pointer(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             wpp::DATA_POINTER = 0;
@@ -193,7 +219,7 @@ namespace wpp {
     }
 
 
-    inline void set_instr_pointer(std::string arg) noexcept {
+    inline void set_instr_pointer(const std::string& arg) noexcept {
         if (arg == "-1") {
             wpp::INSTR_POINTER += 2;
             return;
@@ -202,7 +228,7 @@ namespace wpp {
     }
 
 
-    inline void up_cell(std::string arg) noexcept {
+    inline void up_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             wpp::DATA_POINTER -= 1;
@@ -212,7 +238,7 @@ namespace wpp {
     }
 
 
-    inline void down_cell(std::string arg) noexcept {
+    inline void down_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             wpp::DATA_POINTER += 1;
@@ -233,27 +259,27 @@ namespace wpp {
 
 
     // MATH OPS
-    inline void add_cell(std::string arg) noexcept {
+    inline void add_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
-            set_data_cell(get_data_cell() * 2);
+            set_data_cell(get_data_cell() + 1);
             return;
         }
         set_data_cell(get_data_cell() + get_data_cell(conv(arg)));
     }
 
 
-    inline void sub_cell(std::string arg) noexcept {
+    inline void sub_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
-            set_data_cell(0);
+            set_data_cell(get_data_cell() - 1);
             return;
         }
         set_data_cell(get_data_cell() - get_data_cell(conv(arg)));
     }
 
 
-    inline void mul_cell(std::string arg) noexcept {
+    inline void mul_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_data_cell(pow(get_data_cell(), 2));
@@ -263,9 +289,13 @@ namespace wpp {
     }
 
 
-    inline void div_cell(std::string arg) noexcept {
+    inline void div_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
+            if (get_data_cell() == 0) {
+                set_data_cell(0);
+                return;
+            }
             set_data_cell(1);
             return;
         }
@@ -273,7 +303,7 @@ namespace wpp {
     }
 
 
-    inline void mod_cell(std::string arg) noexcept {
+    inline void mod_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_data_cell(0);
@@ -291,7 +321,13 @@ namespace wpp {
 
 
     // IO
-    inline void out_raw_cell(std::string arg) noexcept {
+    inline void include_file(const std::string& arg) noexcept {
+        wpp::INSTR_POINTER++;
+        wpp::CODE += wpp::read_file("stdlib/" + arg + ".wpp");
+    }
+
+
+    inline void out_raw_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             std::cout << get_data_cell() << std::endl;
@@ -301,7 +337,7 @@ namespace wpp {
     }
 
 
-    inline void out_ascii_cell(std::string arg) noexcept {
+    inline void out_ascii_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             std::cout << (char)get_data_cell() << std::endl;
@@ -311,7 +347,7 @@ namespace wpp {
     }
 
 
-    inline void getch_cell(std::string arg) noexcept {
+    inline void getch_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         // this shit is about to get really hacky.
         if (arg == "-1") {
@@ -331,7 +367,7 @@ namespace wpp {
 
 
     // REGISTER STUFF
-    inline void set_register(std::string arg) noexcept {
+    inline void set_register(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_reg_cell(get_data_cell());
@@ -341,7 +377,7 @@ namespace wpp {
     }
 
 
-    inline void get_register(std::string arg) noexcept {
+    inline void get_register(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_data_cell(get_reg_cell());
@@ -358,7 +394,7 @@ namespace wpp {
 
 
     // STACK MANIPULATION
-    inline void push_reg(std::string arg) noexcept {
+    inline void push_reg(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             wpp::STACK.push(get_reg_cell());
@@ -368,7 +404,7 @@ namespace wpp {
     }
 
 
-    inline void pop_reg(std::string arg) noexcept {
+    inline void pop_reg(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_reg_cell(wpp::STACK.pop());
@@ -378,7 +414,7 @@ namespace wpp {
     }
 
 
-    inline void peek_reg(std::string arg) noexcept {
+    inline void peek_reg(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_reg_cell(wpp::STACK.peek_top());
@@ -393,7 +429,7 @@ namespace wpp {
 
 
     // SET CELL/REG
-    inline void set_cell(std::string arg) noexcept {
+    inline void set_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_data_cell(0);
@@ -403,7 +439,7 @@ namespace wpp {
     }
 
 
-    inline void set_reg(std::string arg) noexcept {
+    inline void set_reg(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
             set_reg_cell(0);

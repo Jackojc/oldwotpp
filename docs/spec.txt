@@ -2,6 +2,8 @@
 ()<I>   :    If index 'I' is re:zero, execute.
 []<I>   :    Loop while value at index 'I' is > 0.
 
+a-h     :    Set registers
+
 ! <I>   :    Boolean NOT the cell at index 'I'
 r <I>   :    Set pointer to register 'I'.
 $ <I>   :    Go to cell at index 'I'.
@@ -13,6 +15,7 @@ v <N>   :    Move down 'N' cells.
 : <I>   :    Output raw value at 'I'.
 . <I>   :    Output ASCII equivalent value at 'I'.
 , <I>   :    Input a single char as ASCII value to 'I'.
+@ <X>   :    Include file 'X'.
 
 # <X>   :    Execute function 'X'.
 

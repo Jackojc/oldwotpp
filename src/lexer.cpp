@@ -18,14 +18,12 @@ namespace wpp {
 
 
     inline std::string clean_string(const std::string& code) noexcept {
-        std::string temp;
+        std::string temp = "";
 
         for (auto &chr: code) {
-            if (wpp::WHITELIST.find(chr) == wpp::WHITELIST.end()) {
-                continue;
+            if (wpp::ALL_WHITELIST.find(chr) != wpp::ALL_WHITELIST.end()) {
+                temp += chr;
             }
-
-            temp += chr;
         }
 
         return temp;
@@ -63,7 +61,7 @@ namespace wpp {
 
         unsigned int ip = 0;
 
-        for (; ip < code.size() ;) {
+        while (ip < code.size()) {
             char chr = code[ip];
 
             if (chr != '<' && chr != '>' && !in_args && code[ip + 1] != '<') {
@@ -103,7 +101,7 @@ namespace wpp {
             ip++;
         }
 
-        wpp::TOKENS = tokens;
+        wpp::TOKENS = std::move(tokens);
     }
 
 

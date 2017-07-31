@@ -28,9 +28,9 @@ namespace wpp {
     };
 
 
-    std::array<DATATYPE, REG_SIZE>   REGISTERS;
-    std::array<DATATYPE, DATA_SIZE>  DATA;
-    wpp::stack<DATATYPE, STACK_SIZE> STACK;
+    std::array<DATATYPE, REG_SIZE>   REGISTERS = {};
+    std::array<DATATYPE, DATA_SIZE>  DATA      = {};
+    wpp::stack<DATATYPE, STACK_SIZE> STACK     = {};
 
     const std::unordered_map<char, TokenCallback> CALLBACKS = {
 
@@ -132,11 +132,22 @@ namespace wpp {
 
     };
 
-    std::unordered_set<char> WHITELIST;
-    std::unordered_map<std::string, wpp::Function> FUNC_DECLARATIONS;
+    const std::unordered_map<char, TokenCallback> PRE_CALLBACKS = {
+        {'@', include_file}
+    };
 
-    wpp::Function GLOB_FUNC;
-    std::vector<wpp::TokenPair> TOKENS;
+    std::unordered_set<char> WHITELIST = {};
+    std::unordered_set<char> PRE_WHITELIST = {};
+    std::unordered_set<char> ALL_WHITELIST = {};
+
+    std::string PRE_WHITELIST_STR = "";
+
+    std::unordered_map<std::string, wpp::Function> FUNC_DECLARATIONS = {};
+
+    wpp::Function GLOB_FUNC = {"", {}};
+    std::vector<wpp::TokenPair> TOKENS = {};
+
+    std::string CODE = "";
 
 
     /*enum Tokens: unsigned int {
