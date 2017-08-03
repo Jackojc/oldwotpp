@@ -3,24 +3,21 @@
 #ifndef WPP_FUNCS_H
 #define WPP_FUNCS_H
 
-#include <math.h>
 
-#include "constants.h"
+
 
 
 
 namespace wpp {
 
     // BUILT INS
-    inline unsigned int count_char(const std::string& code, const std::string& tokens) noexcept;
     inline void do_nothing(const std::string& arg = "-1") noexcept;
-    inline void do_something(const std::string& arg = "-1") noexcept;
     inline void initialise() noexcept;
 
 
     // PARSER FUNCS
-    inline void set_data_cell(const wpp::DATATYPE& value, unsigned int index = wpp::DATA_POINTER) noexcept;
-    inline wpp::DATATYPE get_data_cell(unsigned int index = wpp::DATA_POINTER) noexcept;
+    inline void set_data_cell(const wpp::DATATYPE& value, unsigned int index = wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX]) noexcept;
+    inline wpp::DATATYPE get_data_cell(unsigned int index = wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX]) noexcept;
 
     inline void set_reg_cell(const wpp::DATATYPE& value, unsigned int index = wpp::REG_POINTER) noexcept;
     inline wpp::DATATYPE get_reg_cell(unsigned int index = wpp::REG_POINTER) noexcept;
@@ -47,6 +44,7 @@ namespace wpp {
     // POINTERS
     inline void set_reg_ptr(const std::string& arg = "-1") noexcept;
     inline void set_data_pointer(const std::string& arg = "-1") noexcept;
+    inline void use_data_ptr(const std::string& arg = "-1") noexcept;
     inline void set_instr_pointer(const std::string& arg = "-1") noexcept;
     inline void up_cell(const std::string& arg = "-1") noexcept;
     inline void down_cell(const std::string& arg = "-1") noexcept;
@@ -61,7 +59,6 @@ namespace wpp {
 
 
     // IO
-    inline void include_file(const std::string& arg = "-1") noexcept;
     inline void out_raw_cell(const std::string& arg = "-1") noexcept;
     inline void out_ascii_cell(const std::string& arg = "-1") noexcept;
     inline void getch_cell(const std::string& arg = "-1") noexcept;
@@ -71,6 +68,14 @@ namespace wpp {
     inline void set_register(const std::string& arg = "-1") noexcept;
     inline void get_register(const std::string& arg = "-1") noexcept;
 
+    inline void goto_a(const std::string& arg = "-1") noexcept;
+    inline void goto_b(const std::string& arg = "-1") noexcept;
+    inline void goto_c(const std::string& arg = "-1") noexcept;
+    inline void goto_d(const std::string& arg = "-1") noexcept;
+    inline void goto_e(const std::string& arg = "-1") noexcept;
+    inline void goto_f(const std::string& arg = "-1") noexcept;
+    inline void goto_g(const std::string& arg = "-1") noexcept;
+    inline void goto_h(const std::string& arg = "-1") noexcept;
 
     // STACK
     inline void push_reg(const std::string& arg = "-1") noexcept;
@@ -82,9 +87,6 @@ namespace wpp {
     inline void set_cell(const std::string& arg = "-1") noexcept;
     inline void set_reg(const std::string& arg = "-1") noexcept;
 
-
-    // MEMES
-    inline void add_none(const std::string& arg = "-1") noexcept;
 }
 
 

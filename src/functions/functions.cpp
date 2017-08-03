@@ -5,11 +5,7 @@
 
 
 
-#include "functions.h"
-#include "globals.h"
-#include "getch.h"
-#include "parser.h"
-#include "lexer.cpp"
+
 
 
 namespace wpp {
@@ -47,17 +43,13 @@ namespace wpp {
         return;
     }
 
-    inline void do_something(const std::string& arg) noexcept {
-        wpp::INSTR_POINTER++;
-        return;
-    }
+
 
     inline void initialise() noexcept {
 
         for (auto& item: wpp::PRE_CALLBACKS) {
             wpp::ALL_WHITELIST.insert(item.first);
             wpp::PRE_WHITELIST.insert(item.first);
-            wpp::PRE_WHITELIST_STR += item.first;
 
         }
 
@@ -129,19 +121,14 @@ namespace wpp {
 
                 return;
             }
-
-
-
-
-
         }
     }
 
 
     inline void close_function(const std::string& arg) noexcept {
         wpp::GLOB_FUNC.name = arg;
-        wpp::FUNC_DECLARATIONS[arg] = wpp::GLOB_FUNC;
-        wpp::GLOB_FUNC = { "", { } };
+        wpp::FUNC_DECLARATIONS[arg] = std::move(wpp::GLOB_FUNC);
+        wpp::GLOB_FUNC.reset();
         wpp::INSTR_POINTER++;
     }
 
@@ -212,10 +199,20 @@ namespace wpp {
     inline void set_data_pointer(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
-            wpp::DATA_POINTER = 0;
+            wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX] = 0;
             return;
         }
-        wpp::DATA_POINTER = conv(arg);
+        wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX] = conv(arg);
+    }
+
+
+    inline void use_data_ptr(const std::string& arg) noexcept {
+        wpp::INSTR_POINTER++;
+        if (arg == "-1") {
+            wpp::DATA_POINTER_INDEX = 0;
+            return;
+        }
+        wpp::DATA_POINTER_INDEX = conv(arg);
     }
 
 
@@ -224,27 +221,27 @@ namespace wpp {
             wpp::INSTR_POINTER += 2;
             return;
         }
-        wpp::DATA_POINTER += conv(arg) + 1;
+        wpp::INSTR_POINTER += conv(arg) + 1;
     }
 
 
     inline void up_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
-            wpp::DATA_POINTER -= 1;
+            wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX] -= 1;
             return;
         }
-        wpp::DATA_POINTER -= conv(arg);
+        wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX] -= conv(arg);
     }
 
 
     inline void down_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
-            wpp::DATA_POINTER += 1;
+            wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX] += 1;
             return;
         }
-        wpp::DATA_POINTER += conv(arg);
+        wpp::DATA_PTRS[wpp::DATA_POINTER_INDEX] += conv(arg);
     }
 
 
@@ -321,12 +318,6 @@ namespace wpp {
 
 
     // IO
-    inline void include_file(const std::string& arg) noexcept {
-        wpp::INSTR_POINTER++;
-        wpp::CODE += wpp::read_file("stdlib/" + arg + ".wpp");
-    }
-
-
     inline void out_raw_cell(const std::string& arg) noexcept {
         wpp::INSTR_POINTER++;
         if (arg == "-1") {
@@ -385,6 +376,21 @@ namespace wpp {
         }
         set_data_cell(get_reg_cell(), conv(arg));
     }
+
+
+
+
+
+
+
+    inline void goto_a(const std::string& arg) noexcept { set_reg_ptr("0"); }
+    inline void goto_b(const std::string& arg) noexcept { set_reg_ptr("1"); }
+    inline void goto_c(const std::string& arg) noexcept { set_reg_ptr("2"); }
+    inline void goto_d(const std::string& arg) noexcept { set_reg_ptr("3"); }
+    inline void goto_e(const std::string& arg) noexcept { set_reg_ptr("4"); }
+    inline void goto_f(const std::string& arg) noexcept { set_reg_ptr("5"); }
+    inline void goto_g(const std::string& arg) noexcept { set_reg_ptr("6"); }
+    inline void goto_h(const std::string& arg) noexcept { set_reg_ptr("7"); }
 
 
 

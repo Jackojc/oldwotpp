@@ -1,16 +1,10 @@
-#ifndef WPP_GETCH
-#define WPP_GETCH
-
-
-
-#include <iostream>
-
+#ifndef WPP_GETCH_H
+#define WPP_GETCH_H
 
 namespace wpp {
-
     #ifdef _WIN32
-
         #include <windows.h>
+
         TCHAR getch() {
             DWORD mode, cc;
             HANDLE h = GetStdHandle( STD_INPUT_HANDLE );
@@ -72,9 +66,6 @@ namespace wpp {
         }
 
     #endif
-
 }
-
-
 
 #endif

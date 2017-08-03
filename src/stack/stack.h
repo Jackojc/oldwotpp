@@ -1,9 +1,5 @@
-// For the custom stack object.
-
-#ifndef WPP_STACK
-#define WPP_STACK
-
-#include <array>
+#ifndef WPP_STACK_H
+#define WPP_STACK_H
 
 namespace wpp {
 
@@ -17,7 +13,6 @@ namespace wpp {
         public:
             stack(): index_(0) {}
             ~stack() {}
-
 
             inline std::array<T, X>* get_ref() noexcept {
                 return &items_;
@@ -46,10 +41,7 @@ namespace wpp {
             inline size_t size() const noexcept {
                 return index_;
             }
-
     };
-
 }
-
 
 #endif

@@ -1,16 +1,12 @@
-// For helpful debug functions.
+#ifndef WPP_DEBUGGING
+#define WPP_DEBUGGING
 
-#ifndef WPP_DEBUG
-#define WPP_DEBUG
-
-
-#include <iostream>
-
+#include "debugging.h"
 
 namespace wpp {
 
-    inline void print_data(unsigned int range0 = 0,
-                           unsigned int range1 = 20) noexcept {
+    inline void print_data(unsigned int range0,
+                           unsigned int range1) noexcept {
 
         // Slow and inefficient, pls fix.
         std::cout << "DATA      : [ ";
@@ -58,9 +54,14 @@ namespace wpp {
 
 
     inline void print_pointers() noexcept {
-        std::cout << "DataPtr   : " << wpp::DATA_POINTER << std::endl;
-        std::cout << "RegPtr    : " << wpp::REG_POINTER << std::endl;
-        std::cout << "InstrPtr  : " << wpp::INSTR_POINTER << std::endl;
+        std::cout << "DataPtrs   : [ ";
+        for (unsigned int i = 0; i < wpp::DATA_PTR_S; ++i){
+            std::cout << wpp::DATA_PTRS[i] << ' ';
+        }
+        std::cout << "]" << std::endl;
+
+        std::cout << "RegPtr     : " << wpp::REG_POINTER << std::endl;
+        std::cout << "InstrPtr   : " << wpp::INSTR_POINTER << std::endl;
     }
 
 }

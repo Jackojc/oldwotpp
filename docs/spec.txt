@@ -8,6 +8,7 @@ a-h     :    Set registers
 r <I>   :    Set pointer to register 'I'.
 $ <I>   :    Go to cell at index 'I'.
 ` <N>   :    Move the instruction pointer 'N' places. (e.g. -2, 5) (P.S. Keep in mind, arguments dont count as instructions, its JUST opcodes themselves so make sure to skip appropriately.)
+" <I>   :    Set data ptr to I.
 
 ^ <N>   :    Move up 'N' cells.
 v <N>   :    Move down 'N' cells.
