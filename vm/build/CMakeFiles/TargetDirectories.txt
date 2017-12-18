@@ -1,0 +1,3 @@
+/home/jack/Projects/EsotericLangs/WOT/vm/build/CMakeFiles/rebuild_cache.dir
+/home/jack/Projects/EsotericLangs/WOT/vm/build/CMakeFiles/vm.dir
+/home/jack/Projects/EsotericLangs/WOT/vm/build/CMakeFiles/edit_cache.dir
