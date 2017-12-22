@@ -2,11 +2,16 @@
 #define OBJECT_H
 
 #include <stdint.h>
+#include <memory>
+
 
 namespace wot {
 
+    constexpr uint16_t STR_SIZE = 255;
+
+
     // Types for obj_t
-    enum class TYPE {
+    enum class TYPE: uint8_t {
         U8,
         I8,
         U32,
@@ -14,7 +19,8 @@ namespace wot {
         PTR
     };
 
-    struct obj_t {
+
+    struct __attribute__ ((packed)) obj_t {
         TYPE type;
 
         union {
@@ -24,6 +30,13 @@ namespace wot {
             int32_t  i32;
             void*    ptr;
         };
+
+
+        // Manually cleanup objects stored in `ptr` when needed.
+        template <typename T>
+        void clean() {
+            delete static_cast<T*>(ptr);
+        }
     };
 
 }

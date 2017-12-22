@@ -3,7 +3,7 @@
 
 #include <string>
 #include <algorithm>
-
+#include <iostream>
 #include "../types.h"
 
 namespace wot {
@@ -11,16 +11,16 @@ namespace wot {
     struct vm {
         wot::stack_group& stacks;
         const wot::op_group& operations;
-        wot::code code;
-        wot::instr_ptr ip;
+        wot::code& code;
 
         vm(
             wot::stack_group& stks,
             const wot::op_group& ops,
-            std::string& cde
+            wot::code& cde
         );
-        ~vm();
-        void execute(char terminator);
+
+
+        void execute();
     };
 
 }

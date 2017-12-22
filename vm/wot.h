@@ -10,5 +10,10 @@
 // UTILS
 #include "read_file.h"
 #include "types.h"
+#include "stack_id.h"
+
+// OPERATIONS
+#include "ops/emit.h"
+#include "ops/push.h"
 
 #endif

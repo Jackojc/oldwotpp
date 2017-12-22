@@ -8,28 +8,22 @@ namespace wot {
     vm::vm(
         wot::stack_group& stks,
         const wot::op_group& ops,
-        std::string& cde
+        wot::code& cde
     ):
         stacks(stks),
-        operations(ops)
-    {
-        code = reinterpret_cast<wot::code>(
-            new char[cde.size()]
-        );
+        operations(ops),
+        code(cde)
+    {}
 
-        std::copy(cde.begin(), cde.end(), code);
+    void vm::execute() {
+        bool running = true;
 
-        ip = code;
-    }
+        // Set instruction pointer to the start of the code.
+        wot::instr_ptr ip = (uint8_t*)&code[0];
 
-    vm::~vm() {
-        delete code;
-    }
-
-    void vm::execute(char terminator) {
-        while (*ip != terminator) {
-            ip = operations[*ip](ip, stacks);
-        }
+        do {
+            std::tie(running, ip) = operations[*ip](ip, stacks);
+        } while (running);
     }
 
 }

@@ -4,7 +4,6 @@
 #include <unordered_map>
 #include <vector>
 #include <stdint.h>
-
 #include "../stack/stack.h"
 
 namespace wot {

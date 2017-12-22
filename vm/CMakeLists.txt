@@ -26,9 +26,14 @@ file(GLOB_RECURSE STACKGROUP
     "stack_group/*.h"
 )
 
+file(GLOB_RECURSE OPS
+    "ops/*.cpp"
+    "ops/*.h"
+)
+
 
 # EXECUTABLE
-add_executable(${PROJECT_NAME} ${MAIN} ${OBJECT} ${VM} ${STACK} ${STACKGROUP})
+add_executable(${PROJECT_NAME} ${OBJECT} ${VM} ${STACK} ${STACKGROUP} ${OPS} ${MAIN})
 #add_executable(${PROJECT_NAME} ${MAIN})
 
 
@@ -37,6 +42,7 @@ source_group("object" FILES ${OBJECT})
 source_group("stack" FILES ${STACK})
 source_group("vm" FILES ${VM})
 source_group("stack_group" FILES ${STACKGROUP})
+source_group("ops" FILES ${OPS})
 source_group("main" FILES ${MAIN})
 
 
@@ -45,7 +51,7 @@ source_group("main" FILES ${MAIN})
 
 
 # GCC
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast -flto")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast -flto -m64")
 
 
 # PROPERTIES

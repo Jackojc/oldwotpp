@@ -5,8 +5,6 @@
 
 namespace wot {
 
-
-
 }
 
 #endif

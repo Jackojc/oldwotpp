@@ -1,12 +1,9 @@
 #ifndef READ_FILE_H
 #define READ_FILE_H
 
-#include <iostream>
-#include <vector>
 #include <fstream>
 #include <tuple>
 #include <string>
-#include <cstdint>
 #include <cstddef>
 
 #include "types.h"

@@ -1,1 +1,0 @@
-/usr/bin/c++   -Wall -Wextra -Ofast -flto  -rdynamic CMakeFiles/VM.dir/stack/stack.cpp.o CMakeFiles/VM.dir/object/object.cpp.o CMakeFiles/VM.dir/main.cpp.o  -o VM 

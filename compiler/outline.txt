@@ -1,0 +1,10 @@
+// subroutine
+
+def print {
+    emit
+};
+
+def main {
+    push "Hello World!";
+    call print;
+};
