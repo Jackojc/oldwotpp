@@ -1,7 +1,11 @@
 #include <iostream>
 #include <chrono>
 
-#include "wot.h"
+#include "wotpp/core.h"
+#include "wotpp/utils.h"
+
+#include "impl/stack_id.h"
+#include "impl/ops/ops.h"
 
 
 // USAGE MESSAGE
@@ -11,13 +15,13 @@ void usage() {
 
 
 // No operation. (skip)
-wot::op_return op_nop(wot::instr_ptr ip, wot::stack_group& stacks) {
+wotpp::op_return op_nop(wotpp::instr_ptr ip, wotpp::stack_group& stacks) {
     return {true, ip + 1};
 }
 
 
 // When encountered, halt the machine and exit.
-wot::op_return op_halt(wot::instr_ptr ip, wot::stack_group& stacks) {
+wotpp::op_return op_halt(wotpp::instr_ptr ip, wotpp::stack_group& stacks) {
     return {false, ip};
 }
 
@@ -35,7 +39,7 @@ int main(int argc, const char* argv[]) {
     }
 
     // Attempt to read a file and check if it was successful.
-    std::tie(success, code) = wot::read_file(argv[1]);
+    std::tie(success, code) = wotpp::read_file(argv[1]);
 
     // If we cannot open the file, show an error.
     if (!success) {
@@ -45,13 +49,13 @@ int main(int argc, const char* argv[]) {
     }
 
     // Setup stacks
-    wot::stack global(256);
-    wot::stack local(32);
-    wot::stack args(32);
-    wot::stack returns(256);
+    wotpp::stack global(256);
+    wotpp::stack local(32);
+    wotpp::stack args(32);
+    wotpp::stack returns(256);
 
     // Assign stack objects to IDS
-    wot::stack_group stacks({
+    wotpp::stack_group stacks({
         {LOCAL, local},
         {GLOBAL, global},
         {RETURN, returns},
@@ -59,7 +63,7 @@ int main(int argc, const char* argv[]) {
     });
 
     // Create array for instructions.
-    wot::op_group ops;
+    wotpp::op_group ops;
 
     // Fill operations array with default instruction.
     // This means if it encounters an instruction it
@@ -81,7 +85,7 @@ int main(int argc, const char* argv[]) {
     ops[255] = op_halt;
 
     // Run the VM.
-    wot::vm interpreter(stacks, ops, code);
+    wotpp::vm interpreter(stacks, ops, code);
 
     auto start = std::chrono::high_resolution_clock::now();
     interpreter.execute(); // Run the code.

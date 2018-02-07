@@ -1,12 +1,12 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef WOTPP_OBJECT_H
+#define WOTPP_OBJECT_H
+
 
 #include <stdint.h>
 #include <memory>
 
 
-namespace wot {
-
+namespace wotpp {
     constexpr uint16_t STR_SIZE = 255;
 
 
@@ -22,7 +22,6 @@ namespace wot {
 
     struct __attribute__ ((packed)) obj_t {
         TYPE type;
-
         union {
             uint8_t  u8;
             int8_t   i8;
@@ -38,7 +37,7 @@ namespace wot {
             delete static_cast<T*>(ptr);
         }
     };
-
 }
+
 
 #endif

@@ -1,10 +1,11 @@
 // subroutine
 
 def print {
-    emit
+    emit;
 };
 
 def main {
     push "Hello World!";
     call print;
 };
+

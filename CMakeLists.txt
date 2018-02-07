@@ -6,44 +6,42 @@ project(${PROJECT_NAME})
 # SOURCE FILES
 set(MAIN main.cpp)
 
+
 file(GLOB_RECURSE OBJECT
-    "object/*.cpp"
-    "object/*.h"
+    "wotpp/object/*.cpp"
 )
+
 
 file(GLOB_RECURSE STACK
-    "stack/*.cpp"
-    "stack/*.h"
+    "wotpp/stack/*.cpp"
 )
+
 
 file(GLOB_RECURSE VM
-    "vm/*.cpp"
-    "vm/*.h"
+    "wotpp/vm/*.cpp"
 )
+
 
 file(GLOB_RECURSE STACKGROUP
-    "stack_group/*.cpp"
-    "stack_group/*.h"
+    "wotpp/stack_group/*.cpp"
 )
 
+
 file(GLOB_RECURSE OPS
-    "ops/*.cpp"
-    "ops/*.h"
+    "wotpp/ops/*.cpp"
 )
 
 
 # EXECUTABLE
 add_executable(${PROJECT_NAME} ${OBJECT} ${VM} ${STACK} ${STACKGROUP} ${OPS} ${MAIN})
-#add_executable(${PROJECT_NAME} ${MAIN})
 
 
 # FILTERS
-source_group("object" FILES ${OBJECT})
-source_group("stack" FILES ${STACK})
-source_group("vm" FILES ${VM})
+source_group("object"      FILES ${OBJECT})
+source_group("stack"       FILES ${STACK})
+source_group("vm"          FILES ${VM})
 source_group("stack_group" FILES ${STACKGROUP})
-source_group("ops" FILES ${OPS})
-source_group("main" FILES ${MAIN})
+source_group("ops"         FILES ${OPS})
 
 
 # LINK
@@ -59,4 +57,13 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 	CXX_STANDARD 14
 	CXX_STANDARD_REQUIRED ON
 	CXX_EXTENSIONS OFF
+)
+
+
+# FILE DEPENDENCIES
+# Copies scripts folder into build directory.
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/scripts $<TARGET_FILE_DIR:${PROJECT_NAME}>/scripts
 )

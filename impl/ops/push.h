@@ -1,10 +1,10 @@
-wot::op_return op_push_global_uint8_1(
-    wot::instr_ptr ip,
-    wot::stack_group& stacks
+wotpp::op_return op_push_global_uint8_1(
+    wotpp::instr_ptr ip,
+    wotpp::stack_group& stacks
 ) {
-    wot::obj_t* o = new wot::obj_t();
+    wotpp::obj_t* o = new wotpp::obj_t();
 
-    o->type = wot::TYPE::U8;
+    o->type = wotpp::TYPE::U8;
     o->u8 = *(ip + 1);
 
     stacks[GLOBAL].push(o);
@@ -13,12 +13,12 @@ wot::op_return op_push_global_uint8_1(
 }
 
 
-wot::op_return op_push_global_uint32_1(
-    wot::instr_ptr ip,
-    wot::stack_group& stacks
+wotpp::op_return op_push_global_uint32_1(
+    wotpp::instr_ptr ip,
+    wotpp::stack_group& stacks
 ) {
     // Create object.
-    wot::obj_t* o = new wot::obj_t();
+    wotpp::obj_t* o = new wotpp::obj_t();
 
     // Temporary buffer
     uint8_t buffer[4];
@@ -36,7 +36,7 @@ wot::op_return op_push_global_uint32_1(
         ret += buffer[i];
     }
 
-    o->type = wot::TYPE::U32;
+    o->type = wotpp::TYPE::U32;
     o->u32 = ret;
 
     stacks[GLOBAL].push(o);
@@ -49,13 +49,13 @@ wot::op_return op_push_global_uint32_1(
 
 
 
-wot::op_return op_push_global_int8_1(
-    wot::instr_ptr ip,
-    wot::stack_group& stacks
+wotpp::op_return op_push_global_int8_1(
+    wotpp::instr_ptr ip,
+    wotpp::stack_group& stacks
 ) {
-    wot::obj_t* o = new wot::obj_t();
+    wotpp::obj_t* o = new wotpp::obj_t();
 
-    o->type = wot::TYPE::I8;
+    o->type = wotpp::TYPE::I8;
     o->i8 = *(ip + 1);
 
     stacks[GLOBAL].push(o);
@@ -68,15 +68,15 @@ wot::op_return op_push_global_int8_1(
 
 
 
-wot::op_return op_push_global_str(
-    wot::instr_ptr ip,
-    wot::stack_group& stacks
+wotpp::op_return op_push_global_str(
+    wotpp::instr_ptr ip,
+    wotpp::stack_group& stacks
 ) {
-    wot::obj_t* o = new wot::obj_t();
-    o->type = wot::TYPE::PTR;
+    wotpp::obj_t* o = new wotpp::obj_t();
+    o->type = wotpp::TYPE::PTR;
 
     // Might want to change this later on to save on memory usage.
-    char* str = new char[wot::STR_SIZE];
+    char* str = new char[wotpp::STR_SIZE];
 
     int i = 1;
     char t;

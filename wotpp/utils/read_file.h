@@ -1,15 +1,15 @@
-#ifndef READ_FILE_H
-#define READ_FILE_H
+#ifndef WOTPP_READ_FILE_H
+#define WOTPP_READ_FILE_H
+
 
 #include <fstream>
 #include <tuple>
 #include <string>
 #include <cstddef>
-
 #include "types.h"
 
-namespace wot {
 
+namespace wotpp {
     std::tuple<bool, std::string> read_file(const std::string& fname) {
         std::ifstream is(fname, std::ios::binary | std::ios::ate);
 
@@ -30,7 +30,7 @@ namespace wot {
         // Return string and success.
         return std::make_tuple(true, str);
     }
-
 }
+
 
 #endif
