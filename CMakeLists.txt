@@ -49,7 +49,7 @@ source_group("ops"         FILES ${OPS})
 
 
 # GCC
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Ofast -flto -m64")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wno-unused-parameter -Wextra -Ofast -flto -m64")
 
 
 # PROPERTIES

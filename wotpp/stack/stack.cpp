@@ -14,26 +14,34 @@ namespace wotpp {
     }
 
 
-    int stack::push(wotpp::obj_t* o) {
+    int stack::push(const wotpp::obj_t& o) {
         stk[top++] = o;
         return top;
     }
 
 
     wotpp::obj_t stack::pop() {
-        wotpp::obj_t* old_o = stk[--top];
-        wotpp::obj_t new_o(*old_o);
-        delete old_o;
-        return new_o;
+        return stk[--top];
     }
 
 
-    wotpp::obj_t* stack::peek(int i) {
+    std::vector<wotpp::obj_t> stack::pop(int n) {
+        std::vector<wotpp::obj_t> popped(n);
+
+
+        for (int i = 0; i < n; ++i)
+            popped[i] = pop();
+
+        return popped;
+    }
+
+
+    const wotpp::obj_t& stack::peek(int i) {
         return stk[i];
     }
 
 
-    wotpp::obj_t* stack::peek() {
+    const wotpp::obj_t& stack::peek() {
         return stk[top - 1];
     }
 }

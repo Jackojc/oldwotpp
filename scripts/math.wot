@@ -1,0 +1,219 @@
+// Adding example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 5];     // Push two literals to the stack.
+PSHL -> [0, 5];
+
+ADD  -> [0];        // Add the top two items of the stack.
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+// Subtraction example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 2];     // Push two literals to the stack.
+PSHL -> [0, 15];
+
+SUB  -> [0];        // Subtract the top two items of the stack.
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+// Multiplication example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 2];     // Push two literals to the stack.
+PSHL -> [0, 15];
+
+MUL  -> [0];        // Multiply the top two items of the stack.
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+
+
+// Division example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 2];     // Push two literals to the stack.
+PSHL -> [0, 10];
+
+DIV  -> [0];        // Divide the top two items of the stack.
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+
+
+// Modulus example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 9];     // Push two literals to the stack.
+PSHL -> [0, 10];
+
+MOD  -> [0];        // Mod the top two items of the stack.
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+
+
+
+// Negation example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 67];     // Push a literal to the stack.
+
+NEG  -> [0];        // Negate the top item of the stack.
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+
+
+// Increment example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 0];     // Push a literal to the stack.
+
+INCR -> [0, 3];     // Incr the top item of the stack.
+INCR -> [0, 2];     // Incr the top item of the stack.
+
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).
+
+
+
+
+
+
+
+
+
+
+
+// Decrement example.
+
+PSHL -> [0, 10];    // Push newline character to the stack.
+STOR -> [0, 10, 1]; // Store newline into heap.
+
+PSHL -> [0, 96];     // Push a literal to the stack.
+
+DECR -> [0, 30];     // Decr the top item of the stack.
+DECR -> [0, 21];     // Decr the top item of the stack.
+
+STOR -> [0, 0, 1];  // Store the result to the heap at address `0`.
+
+PUSH -> [0, 0, 1];
+EMIT -> [0, 1];     // Emit the number.
+
+PUSH -> [0, 10, 1]; // Push the newline constant to the stack.
+PRNT -> [0, 1];     // Print the number so we get a newline.
+
+HALT;               // Halt execution (this goes out to my pal pohuing).

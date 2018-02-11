@@ -9,16 +9,17 @@
 namespace wotpp {
     struct stack {
         int top, size;
-        std::vector<wotpp::obj_t*> stk;
+        std::vector<wotpp::obj_t> stk;
 
 
         stack(int s);
 
 
-        int push(wotpp::obj_t* o);
+        int push(const wotpp::obj_t& o);
         wotpp::obj_t pop();
-        wotpp::obj_t* peek(int i);
-        wotpp::obj_t* peek();
+        std::vector<wotpp::obj_t> pop(int n);
+        const wotpp::obj_t& peek(int i);
+        const wotpp::obj_t& peek();
     };
 }
 

@@ -1,2 +1,23 @@
-a
-a!adalaraoaWa aoalalaeaHeeeeeeeeeeeeeh
+// `Hello World!` example.
+// Push "Hello World!\n" in reverse order to the stack.
+// Print 13 characters from the stack to the terminal.
+// Halt the VM.
+
+PSHL -> [0, 10];   // \n
+PSHL -> [0, 33];   // !
+PSHL -> [0, 100];  // d
+PSHL -> [0, 108];  // l
+PSHL -> [0, 114];  // r
+PSHL -> [0, 111];  // o
+PSHL -> [0, 87];   // W
+
+PSHL -> [0, 32];   // ' '
+
+PSHL -> [0, 111];  // o
+PSHL -> [0, 108];  // l
+PSHL -> [0, 108];  // l
+PSHL -> [0, 101];  // e
+PSHL -> [0, 72];   // H
+
+PRNT -> [0, 13];   // Print 13 characters from the stack.
+HALT;              // Halt the VM.

@@ -4,8 +4,15 @@
 #include "wotpp/core.h"
 #include "wotpp/utils.h"
 
-#include "impl/stack_id.h"
-#include "impl/ops/ops.h"
+#include "impl/ops.h"
+
+
+
+
+// TODO:
+// - Implement every operation for both chars and ints.
+
+
 
 
 // USAGE MESSAGE
@@ -14,20 +21,11 @@ void usage() {
 }
 
 
-// No operation. (skip)
-wotpp::op_return op_nop(wotpp::instr_ptr ip, wotpp::stack_group& stacks) {
-    return {true, ip + 1};
-}
 
 
-// When encountered, halt the machine and exit.
-wotpp::op_return op_halt(wotpp::instr_ptr ip, wotpp::stack_group& stacks) {
-    return {false, ip};
-}
 
 
 int main(int argc, const char* argv[]) {
-
     // Load file.
     bool success;
     std::string code;
@@ -37,6 +35,7 @@ int main(int argc, const char* argv[]) {
         usage();
         return -1;
     }
+
 
     // Attempt to read a file and check if it was successful.
     std::tie(success, code) = wotpp::read_file(argv[1]);
@@ -48,49 +47,37 @@ int main(int argc, const char* argv[]) {
         return -1;
     }
 
-    // Setup stacks
-    wotpp::stack global(256);
-    wotpp::stack local(32);
-    wotpp::stack args(32);
-    wotpp::stack returns(256);
 
-    // Assign stack objects to IDS
+
+
+
+    // We succeeded in loading the file, now run it.
+    // Setup the heap.
+    wotpp::heap heap{4096};
+
+    // Setup stacks.
     wotpp::stack_group stacks({
-        {LOCAL, local},
-        {GLOBAL, global},
-        {RETURN, returns},
-        {ARGS, args}
+        wotpp::stack{1024},
+        wotpp::stack{256},
+        wotpp::stack{256},
+        wotpp::stack{64},
+        wotpp::stack{64},
+        wotpp::stack{64},
+        wotpp::stack{64},
+        wotpp::stack{64},
     });
 
+
     // Create array for instructions.
-    wotpp::op_group ops;
-
-    // Fill operations array with default instruction.
-    // This means if it encounters an instruction it
-    // doesn't understand, it will skip it.
-    std::fill(ops.begin(), ops.end(), op_nop);
-
-    // Setup operations.
-    ops[0] = op_push_global_uint8_1;
-    ops[20] = op_push_global_int8_1;
-    ops[30] = op_push_global_uint32_1;
-
-    ops[100] = op_emit_global_uint32_1;
-    ops[101] = op_emit_global_uint8_1;
-    ops[101] = op_emit_global_int8_1;
-
-    ops[200] = op_push_global_str;
-    ops[201] = op_emit_global_str;
-
-    ops[255] = op_halt;
+    wotpp::op_group ops = make_ops();
 
     // Run the VM.
-    wotpp::vm interpreter(stacks, ops, code);
-
+    // Use some chrono stuff for minor benchmarking.
     auto start = std::chrono::high_resolution_clock::now();
-    interpreter.execute(); // Run the code.
+    wotpp::execute(stacks, heap, ops, code); // Run the code.
     auto end = std::chrono::high_resolution_clock::now();
 
+    // Show us how quickly the function executed in NS.
     std::cout << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << "ns" << std::endl;
 
     return 0;

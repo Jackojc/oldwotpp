@@ -2,18 +2,16 @@
 #define WOTPP_STACK_GROUP_H
 
 
-#include <unordered_map>
 #include <vector>
-#include <stdint.h>
 #include "../stack/stack.h"
 
 
 namespace wotpp {
     struct stack_group {
-        std::vector<wotpp::stack*> stacks;
+        std::vector<wotpp::stack> stacks;
 
 
-        stack_group(const std::unordered_map<uint8_t, wotpp::stack&>& group);
+        stack_group(const std::vector<wotpp::stack>& stacks_);
 
 
         wotpp::stack& operator[](int index);
