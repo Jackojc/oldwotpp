@@ -1,54 +1,48 @@
-// Function example.
+// Counter example.
 
-// Enum:
-    ::label->[GENERAL];
-    noop;
-
-    ::label->[ARGS];
-    noop;
-
-    ::label->[RET];
-    noop;
-
-    ::label->[RET_PTRS];
-    noop;
+// Hacky usage of labels to create a sort of enum.
+::label->[STACK_0, ZERO];
+noop;
+::label->[ONE];
 
 
-jump->[main];  // jump to entry point.
-
-
-// ADD
-::label->[ADD];
-add -> [ARGS];  // add the 2 numbers in ARGS.
-
-push -> [GENERAL, 0, 1]; // backup whatever is saved in heap[0].
-
-stor -> [ARGS, 0, 1]; // store result in heap[0] temporarily.
-push -> [RET, 0, 1];  // push heap[0] to return heap.
-
-stor -> [GENERAL, 0, 1]; // restore heap[0] backup.
-ret -> [RET_PTRS];
+// DATA
+pshl -> [STACK_0, 16];     // end.
+pshl -> [STACK_0, ONE];    // step.
+pshl -> [STACK_0, ZERO];   // start.
+stor -> [STACK_0, 240, 3]; // store data.
 
 
 
-// MAIN
-::label->[main, test];
-pshl -> [ARGS, 5];
-pshl -> [ARGS, 5];
-call -> [RET_PTRS, ADD];
-
-stor->[RET, 0, 1];     // temporarily store return in heap[0].
-push->[GENERAL, 0, 1]; // push heap[0] to general.
-
-prnl->["The answer is: "];
-
-emit->[GENERAL, 1];    // emit value in general.
-
-prnl->['\n'];
-
-jump -> [exit];  // redundant here, but would be useful if a
-                 // function needed to terminate the vm somewhere else.
+// PROGRAM
+// Compare current value to end value.
+::label->[START];
+push -> [STACK_0, 240, 1];
+push -> [STACK_0, 242, 1];
+cmeq -> [STACK_0];
 
 
-::label->[exit];
-halt;
+// if they are the same, we are done.
+jpeq -> [STACK_0, END];
+
+
+// add step to current value.
+push -> [STACK_0, 240, 2];
+add  -> [STACK_0];
+
+
+stor -> [STACK_0, 244, 1]; // stor new value at index 244
+push -> [STACK_0, 240, 1]; // push old value.
+emit -> [STACK_0, 1];      // print old value.
+push -> [STACK_0, 244, 1]; // push new value.
+stor -> [STACK_0, 240, 1]; // store new value and overwrite old value.
+
+
+prnl -> ['\n'];
+
+
+jump -> [START];           // loop back to start.
+
+
+::label->[END];
+halt;                      // kill the vm.

@@ -60,11 +60,11 @@ int main(int argc, const char* argv[]) {
         wotpp::stack{1024},
         wotpp::stack{256},
         wotpp::stack{256},
-        wotpp::stack{64},
-        wotpp::stack{64},
-        wotpp::stack{64},
-        wotpp::stack{64},
-        wotpp::stack{64},
+        wotpp::stack{256},
+        wotpp::stack{256},
+        wotpp::stack{256},
+        wotpp::stack{256},
+        wotpp::stack{256}
     });
 
 

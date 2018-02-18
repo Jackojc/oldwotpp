@@ -31,7 +31,7 @@ A couple of example containers that fulfill this role:
 > Operand data.
 
 ##### Implementation details:
-- Stacks must be at least 256 [Objects](./#object-a-union-of-multiple-data-types) in size.
+- Stacks must be at least 64 [Objects](./#object-a-union-of-multiple-data-types) in size.
 - A minimum of 8 stacks must be available to the user.
 
 As an example implementation consider the following:
