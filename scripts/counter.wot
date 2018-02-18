@@ -1,22 +1,15 @@
 // Counter example.
 
 // Hacky usage of labels to create a sort of enum.
-::ZERO;
 ::STACK_0;
 noop;
 
-::ONE;
-::STACK_1;
-noop;
-
-
 
 // DATA
-pshl -> [STACK_0, 10];     // newline constant.
 pshl -> [STACK_0, 16];     // end.
 pshl -> [STACK_0, ONE];    // step.
 pshl -> [STACK_0, ZERO];   // start.
-stor -> [STACK_0, 240, 4]; // store data.
+stor -> [STACK_0, 240, 3]; // store data.
 
 
 
@@ -44,8 +37,7 @@ push -> [STACK_0, 244, 1]; // push new value.
 stor -> [STACK_0, 240, 1]; // store new value and overwrite old value.
 
 
-push -> [STACK_0, 243, 1]; // push newline character.
-prnt -> [STACK_0, 1];      // print newline.
+prnl -> ['\n'];
 
 
 jump -> [START];           // loop back to start.

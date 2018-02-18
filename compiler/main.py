@@ -62,41 +62,58 @@ OPCODE_DICT = {
 }
 
 
-PERSIST = {
-    "opcodes" : OPCODE_DICT,
-    "labels" : {},
-    "functions" : {},
+DIR_DICT = {
+    "LABEL" : 0,
+    "INCLUDE" : 1
+}
 
-    "whitelist" : [x for x in
-        "abcdefghijklmnopqrstuvwxyz\
-        ABCDEFGHIJKLMNOPQRSTUVWXYZ\
-        0123456789\
-         ,->:[]_'\"\\"
-    ],
 
-    "tokens" : {
-        "single_comment" : "//",
-        "multi_comment" : ["/*", "*/"],
-        "label" : "::",
-        "character" : "'",
-        "string" : '"'
+TOKEN = {
+    "type" : None,
+    "body" : {
+        "name" : None,
+        "args" : []
     }
 }
 
 
+PERSIST = {
+    "opcodes" : OPCODE_DICT,
+    "directives" : DIR_DICT,
+
+    "labels" : {},
+
+    "token_type" : TOKEN,
+
+    "op_typename" : "OPERATION",
+    "dir_typename" : "DIRECTIVE",
+
+    "number_typename" : "NUMBER",
+    "string_typename" : "STRING",
+    "char_typename" : "CHAR",
+    "label_typename" : "LABEL"
+}
+
+
 FUNCTIONS = [
-    passes.remove_comments,
-    passes.split_statements,
-    passes.sanitise,
-    passes.tokenise,
-    passes.print_tokens,
-    passes.match_opcodes,
-    passes.expand_strings_to_characters,
-    passes.convert_character_literals,
-    passes.get_label_positions,
+    passes.strip_comments,
+    passes.format_statements,
+    passes.format_arguments,
+    passes.fill_empty_arguments,
+
+    passes.tokenise_statements,
+    passes.match_token_ids,
+    passes.tokenise_args,
+
+    passes.parse_strings,
+    passes.parse_chars,
+    passes.encode_chars,
+
+    passes.find_label_positions,
     passes.parse_label_usage,
-    passes.parse_to_bytecode,
-    passes.print_bytecode
+
+    passes.reduce,
+    passes.debug
 ]
 
 
@@ -114,7 +131,6 @@ def run_pipeline(code, pipeline, persist = {}):
 
 
 def run():
-
     # Check for valid cmdline parameters.
     if len(sys.argv) > 1 and len(sys.argv) < 4:
         inf = sys.argv[1]

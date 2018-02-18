@@ -1,16 +1,10 @@
 // String example.
-
-
 ::STACK_0;
 noop;
 
-
 ::start;
 
-
-pshl -> [STACK_0, "hello\n"];
-prnt -> [STACK_0, 6];
-
+prnl -> ["Hello World\n"];
 
 ::end;
 halt;
